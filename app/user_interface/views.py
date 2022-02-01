@@ -71,11 +71,19 @@ def make_event(request):
         elif days_until_event == 0 and minute_counter < 0:
             return render(request, 'ui/make_events.html', {'form': forms.MakeEventForm(), 'error': "Events can not be created in past time"})
         else:
-            form = forms.MakeEventForm(request.POST)
-            new_event = form.save(commit=False)
-            new_event.user = request.user
-            new_event.save()
-            return redirect('home')
+            form = forms.MakeEventForm(request.POST, request.FILES)
+            if form.is_valid():
+                new_event = Event.objects.create(
+                    title=form.cleaned_data.get('title'),
+                    description=form.cleaned_data.get('description'),
+                    event_date=form.cleaned_data.get('event_date'),
+                    event_time=form.cleaned_data.get('event_time'),
+                    user=request.user,
+                    image=form.cleaned_data.get('image')
+                )
+                new_event.save()
+                return redirect('home')
+            return render(request, 'ui/make_events.html', {'form': forms.MakeEventForm(), 'error': "Invalid data in form"})
 
 @login_required
 def my_events(request):

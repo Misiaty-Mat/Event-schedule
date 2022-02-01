@@ -4,7 +4,7 @@
 
 <h2 style="color: red">{{ error }}</h2>
 
-<form method="POST">
+<form method="POST", enctype='multipart/form-data'>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Make event</button>

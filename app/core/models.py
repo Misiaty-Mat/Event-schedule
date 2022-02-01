@@ -2,7 +2,18 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                        PermissionsMixin
 from django.conf import settings
-from django.utils.timezone import now
+from django.utils import timezone
+
+import os
+import uuid
+
+
+def event_image_file_path(instance, filename):
+    """Generate file path for new event"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('events/images/', filename)
 
 
 class UserManager(BaseUserManager):
@@ -41,9 +52,10 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    event_date = models.DateField(default=now())
-    event_time = models.TimeField(default=now())
+    event_date = models.DateField(default=timezone.now)
+    event_time = models.TimeField(default=timezone.now)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True, upload_to=event_image_file_path)
 
     def __str__(self):
         return self.title

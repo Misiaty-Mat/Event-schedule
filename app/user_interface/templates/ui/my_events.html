@@ -7,6 +7,7 @@
     {% else %}
         <h2>{{ event.title }}</h2><br>
     {% endif %}
-    <h3>{{ event.event_date }} // {{ today }}</h3><br>
+    <h3>{{ event.event_date }}</h3><br>
+    <img src="{{ event.image.url }}" width="40">
     
 {% endfor %}
