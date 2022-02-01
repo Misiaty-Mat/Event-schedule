@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                        PermissionsMixin
 from django.conf import settings
+from django.utils.timezone import now
 
 
 class UserManager(BaseUserManager):
@@ -40,7 +41,8 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    event_time = models.DateTimeField()
+    event_date = models.DateField(default=now())
+    event_time = models.TimeField(default=now())
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):

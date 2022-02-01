@@ -1,0 +1,12 @@
+
+<h1>My events</h1>
+
+{% for event in events %}
+    {% if event.event_date == today %}
+        <h2 style="color: red;">{{ event.title }}</h2><br>
+    {% else %}
+        <h2>{{ event.title }}</h2><br>
+    {% endif %}
+    <h3>{{ event.event_date }} // {{ today }}</h3><br>
+    
+{% endfor %}

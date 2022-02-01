@@ -1,0 +1,11 @@
+
+
+<h1>Make event</h1>
+
+<h2 style="color: red">{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Make event</button>
+</form>
