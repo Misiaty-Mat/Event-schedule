@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 from . import forms
 
@@ -19,37 +21,50 @@ def sign_up_user(request):
     if request.method == 'GET':
         return render(request, 'ui/signUpUser.html', {'form': forms.RegisterForm()})
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(
-                    username=request.POST['username'],
-                    password=request.POST['password1'],
-                    email=request.POST['email']
-                )
-                user.save()
-                login(request, user)
-                return redirect('home')
-            except IntegrityError:
-                return render(
-                    request, 'ui/signUpUser.html',
-                    {'form': forms.RegisterForm(), 'error': 'Username or email is already taken.'}
-                )
-        else:
+        try:
+            validate_email(request.POST['email'])
+        except ValidationError:
             return render(
                 request, 'ui/signUpUser.html',
-                {'form': forms.RegisterForm(), 'error': 'Passwords did not match.'}
+                {'form': forms.RegisterForm(request.POST), 'error': 'Enter valid email.'}
             )
+        else:
+            if request.POST['password1'] == request.POST['password2']:
+                if len(request.POST['password1']) < 6:
+                    return render(
+                        request, 'ui/signUpUser.html',
+                        {'form': forms.RegisterForm(request.POST), 'error': 'Password must be at least 6 characters long.'}
+                    )
+                try:
+                    user = User.objects.create_user(
+                        username=request.POST['username'],
+                        password=request.POST['password1'],
+                        email=request.POST['email']
+                    )
+                    user.save()
+                    login(request, user)
+                    return redirect('home')
+                except IntegrityError:
+                    return render(
+                        request, 'ui/signUpUser.html',
+                        {'form': forms.RegisterForm(request.POST), 'error': 'Username or email is already taken.'}
+                    )
+            else:
+                return render(
+                    request, 'ui/signUpUser.html',
+                    {'form': forms.RegisterForm(request.POST), 'error': 'Passwords did not match.'}
+                )
 
 def loginuser(request):
     if request.method == 'GET':
         return render(request, 'ui/login.html', {'form': AuthenticationForm()})
     else:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is None:
-            return render(request, 'ui/login.html', {'form': AuthenticationForm(), 'error': "Username or password are incorrect"})
-        else:
+        try:
+            user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
             login(request, user)
             return redirect('home')
+        except AttributeError:
+            return render(request, 'ui/login.html', {'form': AuthenticationForm(request.POST), 'error': "Username or password are incorrect"})
 
 @login_required
 def logoutuser(request):

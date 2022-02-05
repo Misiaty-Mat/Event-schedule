@@ -1,11 +1,11 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import forms as auth_form
 from django import forms
 from django.contrib.auth.models import User
 
 from core import models
 
 
-class RegisterForm(UserCreationForm):
+class RegisterForm(auth_form.UserCreationForm):
     email = forms.EmailField(label='Email')
 
     class Meta:
@@ -34,5 +34,7 @@ class MakeEventForm(forms.ModelForm):
         fields = ['title', 'description', 'event_date', 'event_time', 'image']
         widgets = {
             'event_date': DateInput(),
-            'event_time': TimeInput()
+            'event_time': TimeInput(),
+            
         }
+        

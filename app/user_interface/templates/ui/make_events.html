@@ -1,11 +1,34 @@
 
+{% extends 'ui/base.html' %}
 
-<h1>Make event</h1>
+{% load widget_tweaks %}
 
-<h2 style="color: red">{{ error }}</h2>
+{% block site_title %}
+    Create an Event
+{% endblock %}
 
-<form method="POST", enctype='multipart/form-data'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Make event</button>
-</form>
+
+
+{% block content %}
+    <form method="POST" class="form" enctype='multipart/form-data' novalidate>
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% if field.label != 'Image' %}
+                {{ field|add_class:'form-control' }}
+            {% else %}
+                {{ field|add_class:'img_field' }}
+            {% endif %}
+            <span class="help-block">{{ error }}</span>
+        </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Make event</button>
+          </div>
+    </form>
+{% endblock %}

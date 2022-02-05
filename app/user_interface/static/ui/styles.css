@@ -1,0 +1,94 @@
+.custom-nav-style {
+    background-color: #ffb703
+}
+
+.site-title {
+    font-family: 'Teko', sans-serif;
+    font-size: 2.5rem;
+    margin-left: 16px;
+}
+
+.nav-link {
+    font-size: 1.5rem;
+}
+
+.jumbotron {
+    padding-top: 1rem;
+}
+
+.row {
+    padding: 1rem 0;
+}
+
+.content-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.content {
+    background-color: #8ecae6;
+    border-radius: 25px;
+}
+
+.box-title {
+    padding: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.welcome-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.event-box {
+    background-color: #023047;
+    border-radius: 25px;
+    color: white;
+}
+
+.form {
+    text-align: center;
+    padding: 2rem;
+}
+
+label {
+    display: block;
+    font-size: 1.5rem;
+}
+
+.form-control {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    width: 300px;
+}
+
+#id_description {
+    width: 50%;
+}
+
+.img_field {
+    margin-left: 2rem;
+}
+
+.help-block {
+    color: red;
+    display: block;
+    padding-bottom: 20px;
+}
+
+@media (max-width:992px) {
+    .event-box {
+        margin-top: 20px;
+    }
+
+    #id_description {
+        width: 80%;
+    }
+}

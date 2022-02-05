@@ -1,11 +1,29 @@
+{% extends 'ui/base.html' %}
 
+{% load widget_tweaks %}
 
-<h1>Login</h1>
+{% block site_title %}
+    Login
+{% endblock %}
 
-<h2 style="color: red">{{ error }}</h2>
+{% block content %}
+    <form method="POST" class="form" novalidate>
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+        </div>
+        {% endfor %}
+        <span class="help-block">{{ error }}</span>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a href="{% url 'register' %}" class="btn btn-default">Create account</a>
+            <a href="{% url 'home' %}" class="btn btn-default">Cancel</a>
+          </div>
+    </form>
+{% endblock %}

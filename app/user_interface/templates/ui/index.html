@@ -1,1 +1,27 @@
-<h1>HOME</h1>
+{% extends 'ui/base.html' %}
+
+{% load static %}
+
+{% block linkedFiles %}
+    {{ block.super }}
+{% endblock %}
+
+{% block site_title %}
+    Welcome
+    {% if user.is_authenticated %}
+        {{ user.get_username  }}
+    {% endif %}
+    !
+{% endblock %}
+
+{% block content %}
+        <h2 class="box-title">Home</h2>
+        <img class="welcome-img" src="{% static 'ui/welcome.png' %}">
+{% endblock %}
+{% block event_box %}
+    {% if user.is_authenticated %}
+    <h2 class="box-title">Your events</h2>
+    {% else %}
+    <h2 class="box-title">When you will be logged your events will be here!</h2>
+    {% endif %}
+{% endblock %}
