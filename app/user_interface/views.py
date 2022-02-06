@@ -15,7 +15,10 @@ from datetime import datetime
 
 
 def home(request):
-    return render(request, 'ui/index.html')
+    user_events = None
+    if request.user.is_authenticated: 
+        user_events =  Event.objects.filter(user=request.user, event_date__gte=datetime.today()).order_by('event_date')[:5]
+    return render(request, 'ui/index.html', {'events': user_events})
 
 def sign_up_user(request):
     if request.method == 'GET':

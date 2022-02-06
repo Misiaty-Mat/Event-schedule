@@ -21,6 +21,11 @@
 {% block event_box %}
     {% if user.is_authenticated %}
     <h2 class="box-title">Your events</h2>
+    {% for event in events %}
+        <div class="event-list">
+            <h3>{{ event.title }}<h3>
+        </div>
+    {% endfor %}
     {% else %}
     <h2 class="box-title">When you will be logged your events will be here!</h2>
     {% endif %}
