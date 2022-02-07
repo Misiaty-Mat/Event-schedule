@@ -16,8 +16,13 @@ from datetime import datetime
 
 def home(request):
     user_events = None
-    if request.user.is_authenticated: 
+    if request.user.is_authenticated:
         user_events =  Event.objects.filter(user=request.user, event_date__gte=datetime.today()).order_by('event_date')[:5]
+        event_num = len(user_events)
+        event_counter = ['One', 'Two', 'Three', 'Four', 'Five'][:event_num]
+        user_events = zip(event_counter, user_events)
+
+
     return render(request, 'ui/index.html', {'events': user_events})
 
 def sign_up_user(request):

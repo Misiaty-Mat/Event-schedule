@@ -1,3 +1,7 @@
+.container-fluid {
+    padding: 0;
+}
+
 .custom-nav-style {
     background-color: #ffb703
 }
@@ -12,8 +16,19 @@
     font-size: 1.5rem;
 }
 
+.navbar-nav {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.navbar-item {
+    padding-right: 10px;
+    margin-left: 16px;
+}
+
 .jumbotron {
     padding-top: 1rem;
+    margin: 0 16px;
 }
 
 .row {
@@ -52,25 +67,49 @@
     color: white;
 }
 
-.event-list {
-    display: block;
-    background-color: #8ecae6;
+.accordion {
     border-radius: 25px;
-    margin: 2rem auto;
-    padding: 1rem;
+}
+
+.accordion-item {
+    border-radius: 25px;
+    margin: 10px 0;
+}
+
+.accordion-button {
+    border-radius: 25px;
+}
+
+.accordion-item:first-of-type {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.accordion-item:last-of-type {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.accordion-body {
+    color: #000000;
+}
+
+.button-div {
     text-align: center;
-    height: 5rem;
-    width: 80%;
 }
 
-.event-list:hover {
-    background-color: #0073a8;
-    cursor: pointer;
-    padding: 0.5rem;
-}
-
-.event-list:hover > h3 {
-    font-size: 2.5rem;
+.more_events_btn {
+    margin: 1rem 0;
 }
 
 .form {

@@ -21,11 +21,25 @@
 {% block event_box %}
     {% if user.is_authenticated %}
     <h2 class="box-title">Your events</h2>
-    {% for event in events %}
-        <div class="event-list">
-            <h3>{{ event.title }}<h3>
+    <div class="accordion" id="accordionExample">
+      {% for counter, event in events %}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="{{ 'flush-heading'|add:counter }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{ '#flush-collapse'|add:counter }}" aria-expanded="false" aria-controls="{{ 'flush-collapse'|add:counter }}">
+              <h3>{{ event.title }}</h3>
+            </button>
+          </h2>
+          <div id="{{ 'flush-collapse'|add:counter }}" class="accordion-collapse collapse" aria-labelledby="{{ 'flush-heading'|add:counter }}" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              {{ event.event_date }}  {{ event.event_time }}
+            </div>
+          </div>
         </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
+    <div class="button-div">
+      <a class="btn btn-lg btn-primary more_events_btn" href="{% url 'my_events' %}">More</a>
+    </div>
     {% else %}
     <h2 class="box-title">When you will be logged your events will be here!</h2>
     {% endif %}
