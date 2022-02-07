@@ -33,8 +33,7 @@ class MakeEventForm(forms.ModelForm):
         model = models.Event
         fields = ['title', 'description', 'event_date', 'event_time', 'image']
         widgets = {
-            'event_date': DateInput(),
+             'event_date': DateInput(),
             'event_time': TimeInput(),
-            
         }
         

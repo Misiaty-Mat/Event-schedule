@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Event(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     event_date = models.DateField(default=timezone.now)
