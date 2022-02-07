@@ -14,16 +14,19 @@ from core.models import User, Event
 from datetime import datetime
 
 
-def home(request):
+def get_quick_events(request):
+    """Function to get 5 most close events to user"""
     user_events = None
     if request.user.is_authenticated:
         user_events =  Event.objects.filter(user=request.user, event_date__gte=datetime.today()).order_by('event_date')[:5]
         event_num = len(user_events)
         event_counter = ['One', 'Two', 'Three', 'Four', 'Five'][:event_num]
         user_events = zip(event_counter, user_events)
+    return user_events
 
 
-    return render(request, 'ui/index.html', {'events': user_events})
+def home(request):
+    return render(request, 'ui/index.html', {'events': get_quick_events(request)})
 
 def sign_up_user(request):
     if request.method == 'GET':
@@ -82,17 +85,20 @@ def logoutuser(request):
 
 @login_required
 def make_event(request):
+    render_page_var_dict = {'form': forms.MakeEventForm(), 'events': get_quick_events(request)}
     if request.method == 'GET':
-        return render(request, 'ui/make_events.html', {'form': forms.MakeEventForm()})
+        return render(request, 'ui/make_events.html', render_page_var_dict)
     else:
         days_until_event = (datetime.strptime(request.POST['event_date'],'%Y-%m-%d') - datetime.now()).days + 1
         minute_counter = (datetime.strptime(request.POST['event_date'] + ' ' + \
             request.POST['event_time'],'%Y-%m-%d %H:%M') - datetime.now()).total_seconds()
 
         if days_until_event < 0:
-            return render(request, 'ui/make_events.html', {'form': forms.MakeEventForm(), 'error': "Event can not be created earlier than today"})
+            render_page_var_dict['error'] = "Event can not be created earlier than today"
+            return render(request, 'ui/make_events.html', render_page_var_dict)
         elif days_until_event == 0 and minute_counter < 0:
-            return render(request, 'ui/make_events.html', {'form': forms.MakeEventForm(), 'error': "Events can not be created in past time"})
+            render_page_var_dict['error'] = "Events can not be created in past time"
+            return render(request, 'ui/make_events.html', render_page_var_dict)
         else:
             form = forms.MakeEventForm(request.POST, request.FILES)
             if form.is_valid():
@@ -106,7 +112,8 @@ def make_event(request):
                 )
                 new_event.save()
                 return redirect('home')
-            return render(request, 'ui/make_events.html', {'form': forms.MakeEventForm(), 'error': "Invalid data in form"})
+            render_page_var_dict['error'] = "Invalid data in form"
+            return render(request, 'ui/make_events.html', render_page_var_dict)
 
 @login_required
 def my_events(request):

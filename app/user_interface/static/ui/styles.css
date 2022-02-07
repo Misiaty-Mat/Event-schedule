@@ -109,7 +109,9 @@
 }
 
 .more_events_btn {
+    border-radius: 25px;
     margin: 1rem 0;
+    width: 100%;
 }
 
 .form {
