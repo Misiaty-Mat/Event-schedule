@@ -34,7 +34,7 @@
                         <div class="btn-holder">
                             <div class="row">
                                 <div class="col">
-                                    <a href="#" class="btn btn-primary card-btn">Check</a>
+                                    <a href="{% url 'detail_event' event.id %}" class="btn btn-primary card-btn">Check</a>
                                 </div>
                                 <div class="col">
                                     <form id="deleteEvent" action="{% url 'delete_event' event.id %}" method="POST">

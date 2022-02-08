@@ -133,3 +133,8 @@ def del_event(request, event_id):
     if request.method == 'POST':
         Event.objects.get(id=event_id).delete()
         return redirect('my_events')
+
+@login_required
+def detail_event(request, event_id):
+    event = Event.objects.get(id=event_id, user=request.user)
+    return render(request, 'ui/detail-event.html', {'event': event})

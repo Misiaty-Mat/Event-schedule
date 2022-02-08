@@ -38,6 +38,10 @@
     padding: 1rem 0;
 }
 
+.page-title {
+    word-break: break-all;
+}
+
 .content {
     background-color: #8ecae6;
     border-radius: 25px;
@@ -71,15 +75,23 @@
 .accordion-item {
     border-radius: 25px;
     margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .accordion-button {
     border-radius: 25px;
+    height: 5rem;
+    white-space: nowrap;
 }
 
 .button-txt {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.a-check {
+    float: right;
 }
 
 .accordion-item:first-of-type {
@@ -221,6 +233,10 @@ label {
     font-size: small;
     margin: 1rem 0;
     width: 100%;
+}
+
+.description {
+    word-break: break-all;
 }
 
 @media (max-width:992px) {
