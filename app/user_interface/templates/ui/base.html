@@ -98,14 +98,16 @@
                                                         data-bs-target="{{ '#flush-collapse'|add:counter }}"
                                                         aria-expanded="false"
                                                         aria-controls="{{ 'flush-collapse'|add:counter }}">
-                                                    <h3>{{ event.title }}</h3>
+                                                    <span class="button-txt"><h3>{{ event.title }}</h3></span>
                                                 </button>
                                             </h2>
                                             <div id="{{ 'flush-collapse'|add:counter }}"
                                                  class="accordion-collapse collapse"
                                                  aria-labelledby="{{ 'flush-heading'|add:counter }}"
                                                  data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body">{{ event.event_date|date:'E-d-Y' }} {{ event.event_time|date:'G:i'}}</div>
+                                                <div class="accordion-body">
+                                                    {{ event.event_date|date:'E-d-Y' }} {{ event.event_time|date:'G:i'}}
+                                                </div>
                                             </div>
                                         </div>
                                     {% endfor %}

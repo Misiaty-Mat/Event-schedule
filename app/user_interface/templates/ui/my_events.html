@@ -1,15 +1,67 @@
+{% extends 'ui/base.html' %}
+{% load static %}
+{% block site_title %}My events{% endblock %}
 
-<h1>My events</h1>
+{% block content %}
+    <div class="row">
+        {% for event in events %}
+            <div class="col-lg-6 col-xl-3">
+                <div class="card">
+                    <div class="img-container">
+                        {% if event.image.url is not null %}
+                            <img src="{{ event.image.url }}" class="card-img-top img-fluid img-thumbnail" alt="Background image">
+                        {% else %}
+                            <img src="{% static 'ui/basic-image.jpg' %}" class="card-img-top img-thumbnail" alt="Background image">
+                        {% endif %}
+                        <div class="fade-in-box">
+                            <div class="time-box">
+                                <span class="oneliner">{{ event.event_date|date:'E d Y' }}</span>
+                                <span class="oneliner">{{ event.event_time|date:'G:i' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {% if event.event_date == today %}
+                                {{ event.title }}
+                            {% else %}
+                                {{ event.title }}
+                            {% endif %}
+                        </h5>
+                        <div class="card-description">
+                            <p class="card-text">{{ event.description }}</p>
+                        </div>
+                        <div class="btn-holder">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#" class="btn btn-primary card-btn">Check</a>
+                                </div>
+                                <div class="col">
+                                    <form id="deleteEvent" action="{% url 'delete_event' event.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <a href="#"
+                                           class="btn card-btn"
+                                           onclick="document.getElementById('deleteEvent').submit();">
+                                           Delete
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
 
-{% for event in events %}
-    {% if event.event_date == today %}
-        <h2 style="color: red;">{{ event.title }}</h2><br>
-    {% else %}
-        <h2>{{ event.title }}</h2><br>
-    {% endif %}
-    <h3>{{ event.event_date }}</h3><br>
-    {% if event.image.url is not null %}
-        <img src="{{ event.image.url }}" width="40">
-    {% endif %}
-    
-{% endfor %}
+{% block event_box %}{% endblock %}
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.forms import forms
 from django.shortcuts import redirect, render
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
@@ -73,7 +73,10 @@ def loginuser(request):
             login(request, user)
             return redirect('home')
         except AttributeError:
-            return render(request, 'ui/login.html', {'form': AuthenticationForm(request.POST), 'error': "Username or password are incorrect"})
+            return render(
+                request,
+                'ui/login.html',
+                {'form': AuthenticationForm(request.POST), 'error': "Username or password are incorrect"})
 
 @login_required
 def logoutuser(request):
@@ -124,3 +127,9 @@ def my_events(request):
         today = datetime.today()
         events = Event.objects.filter(user=request.user, event_date__gte=today).order_by('event_date')
         return render(request, 'ui/my_events.html', {'events': events, 'today': today.date})
+
+@login_required
+def del_event(request, event_id):
+    if request.method == 'POST':
+        Event.objects.get(id=event_id).delete()
+        return redirect('my_events')
