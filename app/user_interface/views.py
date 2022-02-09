@@ -129,6 +129,13 @@ def my_events(request):
         return render(request, 'ui/my_events.html', {'events': events, 'today': today.date})
 
 @login_required
+def old_events(request):
+    if request.method == 'GET':
+        today = datetime.today()
+        events = Event.objects.filter(user=request.user, event_date__lt=today).order_by('-event_date')
+        return render(request, 'ui/old_events.html', {'events': events, 'today': today.date})
+
+@login_required
 def del_event(request, event_id):
     if request.method == 'POST':
         Event.objects.get(id=event_id).delete()

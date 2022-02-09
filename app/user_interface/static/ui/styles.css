@@ -153,6 +153,12 @@ label {
     padding-bottom: 20px;
 }
 
+.btn-old-events {
+    float: right;
+    margin: 1rem;
+    width: 10rem;
+}
+
 .card {
     border-radius: 25px;
     height: 400px;
@@ -163,7 +169,7 @@ label {
     position: relative;
 }
 
-.img-thumbnail {
+.card-img-top {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     display: block;
@@ -187,7 +193,7 @@ label {
     -ms-transform: translate(-50%, -50%)
 }
 
-.img-container:hover .img-thumbnail {
+.img-container:hover .card-img-top {
     opacity: 0.3;
 }
 
@@ -235,8 +241,13 @@ label {
     width: 100%;
 }
 
-.description {
+.spaced-out {
     word-break: break-all;
+    padding: 2rem;
+}
+
+.detail-image {
+    border-radius: 50px;
 }
 
 @media (max-width:992px) {
@@ -245,5 +256,9 @@ label {
     }
     #id_description {
         width: 80%;
+    }
+
+    .fade-in-box {
+        opacity: 1;
     }
 }

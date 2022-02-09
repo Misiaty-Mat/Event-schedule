@@ -4,54 +4,80 @@
 
 {% block content %}
     <div class="row">
-        {% for event in events %}
-            <div class="col-lg-6 col-xl-3">
-                <div class="card">
-                    <div class="img-container">
-                        {% if event.image.url is not null %}
-                            <img src="{{ event.image.url }}" class="card-img-top img-fluid img-thumbnail" alt="Background image">
-                        {% else %}
-                            <img src="{% static 'ui/basic-image.jpg' %}" class="card-img-top img-thumbnail" alt="Background image">
-                        {% endif %}
-                        <div class="fade-in-box">
-                            <div class="time-box">
-                                <span class="oneliner">{{ event.event_date|date:'E d Y' }}</span>
-                                <span class="oneliner">{{ event.event_time|date:'G:i' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {% if event.event_date == today %}
-                                {{ event.title }}
-                            {% else %}
-                                {{ event.title }}
-                            {% endif %}
-                        </h5>
-                        <div class="card-description">
-                            <p class="card-text">{{ event.description }}</p>
-                        </div>
-                        <div class="btn-holder">
-                            <div class="row">
-                                <div class="col">
-                                    <a href="{% url 'detail_event' event.id %}" class="btn btn-primary card-btn">Check</a>
-                                </div>
-                                <div class="col">
-                                    <form id="deleteEvent" action="{% url 'delete_event' event.id %}" method="POST">
-                                        {% csrf_token %}
-                                        <a href="#"
-                                           class="btn card-btn"
-                                           onclick="document.getElementById('deleteEvent').submit();">
-                                           Delete
-                                        </a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="col">
+            <a href="{% url 'old_events' %}" class="btn-old-events btn btn-primary">See old events ></a>
+        </div>
+    </div>
+    {% if events|length == 0 %}
+    <div class="row">
+        <div class="col">
+            <h2 class="box-title not-found">No events found</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="button-div">
+                <a class="btn btn-lg btn-block more_events_btn btn-primary"
+                href="{% url 'make_event' %}">Create event</a>
             </div>
-        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        {% if events|length == 0 %}
+            <img class="welcome-img spaced-out" src="{% static 'ui/nothing-found.jpg' %}">
+        {% else %}
+            <div class="row">
+                {% for event in events %}
+                    <div class="col-lg-6 col-xl-3">
+                        <div class="card">
+                            <div class="img-container">
+                                {% if event.image.url is not null %}
+                                    <img src="{{ event.image.url }}" class="card-img-top img-fluid img-thumbnail" alt="Background image">
+                                {% else %}
+                                    <img src="{% static 'ui/basic-image.jpg' %}" class="card-img-top img-thumbnail" alt="Background image">
+                                {% endif %}
+                                <div class="fade-in-box">
+                                    <div class="time-box">
+                                        <span class="oneliner">{{ event.event_date|date:'E d Y' }}</span>
+                                        <span class="oneliner">{{ event.event_time|date:'G:i' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {% if event.event_date == today %}
+                                        {{ event.title }}
+                                    {% else %}
+                                        {{ event.title }}
+                                    {% endif %}
+                                </h5>
+                                <div class="card-description">
+                                    <p class="card-text">{{ event.description }}</p>
+                                </div>
+                                <div class="btn-holder">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a href="{% url 'detail_event' event.id %}" class="btn btn-primary card-btn">Check</a>
+                                        </div>
+                                        <div class="col">
+                                            <form id="deleteEvent" action="{% url 'delete_event' event.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <a href="#"
+                                                class="btn card-btn"
+                                                onclick="document.getElementById('deleteEvent').submit();">
+                                                Delete
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
