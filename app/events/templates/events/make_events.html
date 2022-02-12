@@ -1,21 +1,23 @@
-{% extends 'ui/base.html' %}
+{% extends 'base.html' %}
 {% load widget_tweaks %}
-{% block site_title %}Register{% endblock %}
+{% block site_title %}Create an Event{% endblock %}
 {% block content %}
-    <form method="POST" class="form" novalidate>
+    <form method="POST" class="form" enctype='multipart/form-data' novalidate>
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
         {% for field in form.visible_fields %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field|add_class:'form-control' }}
+                {% if field.label != 'Image' %}
+                    {{ field|add_class:'form-control' }}
+                {% else %}
+                    {{ field|add_class:'img_field' }}
+                {% endif %}
             </div>
         {% endfor %}
         <span class="help-block">{{ error }}</span>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Register</button>
-            <a href="{% url 'login' %}" class="btn btn-default">Already have account?</a>
-            <a href="{% url 'home' %}" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary">Make event</button>
         </div>
     </form>
 {% endblock %}

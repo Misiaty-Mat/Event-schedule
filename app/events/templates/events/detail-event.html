@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block site_title %}
+    <h1>{{ event.title }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="box-title">Description</h2>
+    <p class="spaced-out">{{ event.description }}</p>
+{% endblock %}
+
+{% block event_box %}
+    <div class="spaced-out">
+        <h3>{{ event.event_date }}</h3>
+        <h3>{{ event.event_time }}</h3>
+    </div>
+    {% if event.image.url is not null %}
+        <img src="{{ event.image.url }}" class="detail-image img-fluid spaced-out" alt="Event image">
+    {% endif %}
+{% endblock %}
