@@ -1,9 +1,14 @@
+body {
+    background-image: url("sky.jpg");
+    background-size: cover;
+    height: 100%;
+}
 .container-fluid {
     padding: 0;
 }
 
 .custom-nav-style {
-    background-color: #ffb703
+    background-color: #8ecae698;
 }
 
 .site-title {
@@ -29,6 +34,7 @@
 .jumbotron {
     padding-top: 1rem;
     margin: 0 16px;
+    min-height: calc(100vh - 174px);
 }
 
 .content-title {
@@ -43,7 +49,7 @@
 }
 
 .content {
-    background-color: #8ecae6;
+    background-color: #8ecae698;
     border-radius: 25px;
 }
 
@@ -250,6 +256,27 @@ label {
     border-radius: 50px;
 }
 
+.footer {
+    background-color: #fac849;
+    margin-top: 1rem;
+    margin-bottom: -50px;
+    text-align: center;
+    width: 100%;
+    height:10%;
+}
+
+.footer > a {
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    opacity: 0.7;
+    text-decoration: inherit;
+}
+
+.footer > a:hover {
+    opacity: 1;
+}
+
 @media (max-width:992px) {
     .event-box {
         margin-top: 20px;
@@ -260,5 +287,9 @@ label {
 
     .fade-in-box {
         opacity: 1;
+    }
+
+    .footer > a {
+        padding: 0.5rem 3rem;
     }
 }

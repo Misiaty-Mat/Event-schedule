@@ -12,7 +12,6 @@
                   rel="stylesheet"
                   integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
                   crossorigin="anonymous">
-            <link rel="stylesheet" href="{% static 'ui/styles.css' %}" />
             <link rel="shortcut icon"
                   type="image/png"
                   href="{% static 'ui/favicon.png' %}"/>
@@ -20,6 +19,8 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Teko:wght@700&display=swap"
                   rel="stylesheet">
+            <link rel="stylesheet" href="{% static 'ui/styles.css' %}" />
+            <script src="https://kit.fontawesome.com/30c6a23459.js" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
                     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
                     crossorigin="anonymous"></script>
@@ -130,6 +131,18 @@
                         {% endblock %}
                     </div>
                 </div>
+            </div>
+            <div class="footer">
+                <a href="https://github.com/Misiaty-Mat" class="link-dark">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/mateusz-mis/" class="link-dark">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="mailto:mateuszmis06@gmail.com" class="link-dark">
+                    <i class="fa-solid fa-envelope"></i>
+                </a><br>
+                <small>Contact me!</small>
             </div>
         </div>
     </body>
