@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
@@ -79,5 +79,22 @@ def del_event(request, event_id):
 
 @login_required
 def detail_event(request, event_id):
-    event = Event.objects.get(id=event_id, user=request.user)
-    return render(request, 'events/detail-event.html', {'event': event})
+    event = get_object_or_404(Event, pk=event_id, user=request.user)
+    if request.method == 'GET':
+        return render(request, 'events/detail_event.html', {'event': event})
+
+@login_required
+def edit_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id, user=request.user)
+    if request.method == 'GET': 
+        form = MakeEventForm(instance=event)
+        return render(request, 'events/edit_event.html', {'event': event, 'form': form, 'error': 'Bad information'})
+    else:
+        try:
+            form = MakeEventForm(request.POST, request.FILES, instance=event)
+            if form.is_valid():
+                form.save()
+                return redirect('my_events')
+            raise(ValueError)
+        except ValueError:
+            return render(request, 'events/edit_event.html', {'event': event, 'form': form})

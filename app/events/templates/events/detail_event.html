@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block site_title %}
-    <h1>{{ event.title }}
+    {{ event.title }}
 {% endblock %}
 
 {% block content %}
-    <a href="{% url 'make_event' %}" class="btn-old-events btn btn-primary">Edit this event</a>
+    <a href="{% url 'edit_event' event.id %}" class="btn-old-events btn btn-primary">Edit this event</a>
     <h2 class="box-title">Description</h2>
-    <p class="spaced-out">&emsp;{{ event.description }}</p>
+    <p class="spaced-out">{{ event.description }}</p>
 {% endblock %}
 
 {% block event_box %}

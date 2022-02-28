@@ -11,19 +11,19 @@ from core.forms import RegisterForm
 
 def sign_up_user(request):
     if request.method == 'GET':
-        return render(request, 'user/signUpUser.html', {'form': RegisterForm()})
+        return render(request, 'user/sign_up.html', {'form': RegisterForm()})
     try:
         validate_email(request.POST['email'])
     except ValidationError:
         return render(
-            request, 'user/signUpUser.html',
+            request, 'user/sign_up.html',
             {'form': RegisterForm(request.POST), 'error': 'Enter valid email.'}
         )
     else:
         if request.POST['password1'] == request.POST['password2']:
             if len(request.POST['password1']) < 6:
                 return render(
-                    request, 'user/signUpUser.html',
+                    request, 'user/sign_up.html',
                     {'form': RegisterForm(request.POST), 'error': 'Password must be at least 6 characters long.'}
                 )
             try:
@@ -37,11 +37,11 @@ def sign_up_user(request):
                 return redirect('home')
             except IntegrityError:
                 return render(
-                    request, 'user/signUpUser.html',
+                    request, 'user/sign_up.html',
                     {'form': RegisterForm(request.POST), 'error': 'Username or email is already taken.'}
                 )
         return render(
-            request, 'user/signUpUser.html',
+            request, 'user/sign_up.html',
             {'form': RegisterForm(request.POST), 'error': 'Passwords did not match.'}
         )
 

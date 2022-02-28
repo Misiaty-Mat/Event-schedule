@@ -153,6 +153,10 @@ label {
     margin-left: 2rem;
 }
 
+p > a {
+    display: block;
+}
+
 .help-block {
     color: red;
     display: block;

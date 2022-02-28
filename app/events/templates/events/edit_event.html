@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block site_title %}
+    {{ event.title }}
+{% endblock %}
+
+{% block content %}
+
+    <form method="POST" class="form" enctype='multipart/form-data' novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Make changes</button>
+    </form>
+
+    <form method="POST" class="form" action="{% url 'delete_event' event.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+
+{% endblock %}
