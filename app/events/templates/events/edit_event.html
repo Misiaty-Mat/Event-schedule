@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block site_title %}
     {{ event.title }}
@@ -8,8 +9,20 @@
 
     <form method="POST" class="form" enctype='multipart/form-data' novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Make changes</button>
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.label != 'Image' %}
+                    {{ field|add_class:'form-control' }}
+                {% else %}
+                    {{ field|add_class:'img_field' }}
+                {% endif %}
+                <div class="help-block">{{ field.errors }}</div>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Make changes</button>
+        </div>
     </form>
 
     <form method="POST" class="form" action="{% url 'delete_event' event.id %}">

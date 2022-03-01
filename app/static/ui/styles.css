@@ -133,6 +133,15 @@ body {
     padding: 2rem;
 }
 
+.form-group > a {
+    display: block;
+}
+
+label:nth-child(4) {
+    display: inline;
+    line-height: 3rem;
+}
+
 label {
     display: block;
     font-size: 1.5rem;
@@ -149,12 +158,18 @@ label {
     width: 50%;
 }
 
+
 .img_field {
     margin-left: 2rem;
 }
 
-p > a {
-    display: block;
+#image-clear_id {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.errorlist {
+    list-style-type: none;
 }
 
 .help-block {
@@ -193,7 +208,7 @@ p > a {
 
 .fade-in-box {
     transition: .5s ease;
-    opacity: 0;
+    opacity: 0.1;
     position: absolute;
     top: 50%;
     left: 50%;

@@ -22,40 +22,21 @@ def home(request):
 
 @login_required
 def make_event(request):
-    render_page_var_dict = {'form': MakeEventForm(request.POST, request.FILES), 'events': get_quick_events(request)}
+    form = MakeEventForm(request.POST, request.FILES)
+    near_events = get_quick_events(request)
     if request.method == 'GET':
-        return render(request, 'events/make_events.html', render_page_var_dict)
+        return render(request, 'events/make_events.html', {'form': form, 'events': near_events})
     else:
-        if request.POST['title'] == '':
-                render_page_var_dict['error'] = "You must give a title to the event"
-                return render(request, 'events/make_events.html', render_page_var_dict)
         try:
-            days_until_event = (datetime.strptime(request.POST['event_date'],'%Y-%m-%d') - datetime.now()).days + 1
-            minute_counter = (datetime.strptime(request.POST['event_date'] + ' ' + \
-                request.POST['event_time'],'%Y-%m-%d %H:%M') - datetime.now()).total_seconds()
-            if days_until_event < 0:
-                render_page_var_dict['error'] = "Event can not be created earlier than today"
-                return render(request, 'events/make_events.html', render_page_var_dict)
-            elif days_until_event == 0 and minute_counter < 0:
-                render_page_var_dict['error'] = "Events can not be created in past time"
-                return render(request, 'events/make_events.html', render_page_var_dict)
-
             form = MakeEventForm(request.POST, request.FILES)
             if form.is_valid():
-                new_event = Event.objects.create(
-                    title=form.cleaned_data.get('title'),
-                    description=form.cleaned_data.get('description'),
-                    event_date=form.cleaned_data.get('event_date'),
-                    event_time=form.cleaned_data.get('event_time'),
-                    user=request.user,
-                    image=form.cleaned_data.get('image')
-                )
+                new_event = form.save(commit=False)
+                new_event.user = request.user
                 new_event.save()
                 return redirect('home')
-            return render(request, 'events/make_events.html', render_page_var_dict)
+            raise(ValueError)
         except ValueError:
-            render_page_var_dict['error'] = "You must specify a time of the event"
-            return render(request, 'events/make_events.html', render_page_var_dict)
+            return render(request, 'events/make_events.html', {'form': form, 'events': near_events})
 
 @login_required
 def my_events(request):
@@ -86,9 +67,9 @@ def detail_event(request, event_id):
 @login_required
 def edit_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id, user=request.user)
-    if request.method == 'GET': 
+    if request.method == 'GET':
         form = MakeEventForm(instance=event)
-        return render(request, 'events/edit_event.html', {'event': event, 'form': form, 'error': 'Bad information'})
+        return render(request, 'events/edit_event.html', {'event': event, 'form': form})
     else:
         try:
             form = MakeEventForm(request.POST, request.FILES, instance=event)
