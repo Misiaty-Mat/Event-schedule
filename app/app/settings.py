@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'core',
     'user',
     'events',
+    'ivnite_to_event',
 ]
 
 MIDDLEWARE = [

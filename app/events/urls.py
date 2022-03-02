@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('del-event/<int:event_id>', views.del_event, name='delete_event'),
     path('events/<int:event_id>', views.detail_event, name='detail_event'),
     path('events/edit/<int:event_id>', views.edit_event, name='edit_event'),
+    path('events/<int:event_id>/invite/', include('ivnite_to_event.urls')),
 ]

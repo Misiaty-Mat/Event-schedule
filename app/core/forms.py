@@ -54,3 +54,5 @@ class MakeEventForm(forms.ModelForm):
             del minute_counter
         return cd
         
+class SearchForUserForm(forms.Form):
+    username = forms.CharField(label="Who to invite?", max_length=100)

@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <a href="{% url 'edit_event' event.id %}" class="btn-old-events btn btn-primary">Edit this event</a>
+    <a href="{% url 'edit_event' event.id %}" class="extra-btn btn btn-primary">Edit this event</a>
+    <a href="{% url 'search_for_user' event.id %}" class="extra-btn btn btn-primary">Invite to event!</a>
     <h2 class="box-title">Description</h2>
     <p class="spaced-out">{{ event.description }}</p>
 {% endblock %}

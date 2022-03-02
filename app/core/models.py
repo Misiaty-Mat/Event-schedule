@@ -18,10 +18,13 @@ def event_image_file_path(instance, filename):
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, password=None, email='', **extra_fields):
+    def create_user(self, username, email, password=None, **extra_fields):
         """Creates and saves a new user"""
         if not username:
             raise ValueError('Users must have username')
+
+        if not email:
+            raise ValueError('Users must have an email address')
         
         user = self.model(username=username, email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
@@ -39,8 +42,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model"""
-    username = models.CharField(max_length=255, unique=True)
-    email = models.EmailField(max_length=255, unique=True)
+    username = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
