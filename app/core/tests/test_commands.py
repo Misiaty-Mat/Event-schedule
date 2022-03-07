@@ -40,5 +40,4 @@ class CommandTests(TestCase):
         )
         call_command('delete_old_events')
         event_len = Event.objects.all().count()
-        print("działa?")
         self.assertEqual(event_len, 1)
